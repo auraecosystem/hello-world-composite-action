@@ -1,0 +1,24 @@
+name: Aura Design Review Automation
+description: Automated Design, Documentation, Accessibility, SVG, Mermaid and Branding Review
+
+inputs:
+  repository:
+    description: Repository to review.
+    required: false
+    default: ${{ github.repository }}
+
+outputs:
+  report:
+    description: Markdown review report location.
+    value: reports/review.md
+
+runs:
+  using: composite
+
+  steps:
+    - shell: bash
+      run: |
+        echo "🔮 Reviewing ${{ inputs.repository }}"
+
+    - shell: bash
+      run: bash scripts/review-all.sh "${{ inputs.repository }}"
