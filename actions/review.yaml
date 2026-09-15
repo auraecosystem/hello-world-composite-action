@@ -1,0 +1,45 @@
+name: Aura Review
+
+on:
+  workflow_dispatch:
+  pull_request:
+  push:
+    branches:
+      - main
+      - dev
+      - next
+      - web4
+
+permissions:
+  contents: read
+  pull-requests: write
+  issues: write
+
+jobs:
+  review:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        repo:
+          - auraecosystem/APLCE
+          - auraecosystem/KIBS
+          - auraecosystem/projects
+          - auraecosystem/aegis
+          - auraecosystem/gh-actions-runner
+          - auraecosystem/Images-runner
+          - Web4application/Web4
+          - Qubuhub-org/cloud
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: ./.github/actions/design-review
+        with:
+          repository: ${{ matrix.repo }}
+
+      - name: Upload report
+        uses: actions/upload-artifact@v4
+        with:
+          name: review-${{ matrix.repo }}
+          path: reports/
