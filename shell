@@ -1,0 +1,2 @@
+cd hello-world-composite-action
+echo "echo Goodbye" > goodbye.sh
